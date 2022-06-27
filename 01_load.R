@@ -11,6 +11,7 @@
 # See the License for the specific language governing permissions and limitations under the License.
 library(tidyverse)
 library(sf)
+library(patchwork)
 bc_region_sf <- sf::st_read(here::here("data","map-polygon.shp"))[2:15,]%>%
   mutate(id=row_number())%>%
   mutate(region=c(
@@ -33,8 +34,17 @@ bc_region_sf <- sf::st_read(here::here("data","map-polygon.shp"))[2:15,]%>%
 
 write_rds(bc_region_sf, here::here("out","bc_region_sf.rds"))
 
-ggplot(bc_region_sf)+
-  geom_sf(aes(fill=region), colour="white")+
-  geom_sf_text(aes(label=id))+
+old_data <- sf::st_read(here::here(
+  "old_data",
+  "CNCNMCRGN1_polygon.shp"
+)) 
+
+old_shape <- ggplot(old_data)+
+  geom_sf(aes(fill=CNMCRGNNM))+
   theme_void()
 
+new_shape <- ggplot(bc_region_sf)+
+  geom_sf(aes(fill=region))+
+  theme_void()
+
+old_shape+new_shape
