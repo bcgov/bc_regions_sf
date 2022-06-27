@@ -10,7 +10,7 @@ bc_regions_sf
 
 ### Usage
 
-Source file 01_load.R to create simple features representation of BC's development regions. 
+Source file 01_load.R to create simple features representation of BC's development regions. Intended usage is for choropleth maps (where the fill of a region depends on the value of a variable for that region), NOT for point locations.  The geographic coordinates are WRONG!  
 
 ### Project Status
 
