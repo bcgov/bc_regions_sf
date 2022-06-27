@@ -11,29 +11,30 @@
 # See the License for the specific language governing permissions and limitations under the License.
 library(tidyverse)
 library(sf)
-bc_region_sf <- sf::st_read(here::here("data","bc_regions-polygon.shp"))[1:15,]%>%
+bc_region_sf <- sf::st_read(here::here("data","map-polygon.shp"))[2:15,]%>%
+  mutate(id=row_number())%>%
   mutate(region=c(
-    "north_coast",
     "northeast",
+    "nechako",
     "cariboo",
-    "north_coast",
-    "north_coast",
-    "north_coast",
-    "north_coast",
-    "vancouver_island_coast",
     "thompson_okanagan",
     "north_coast",
-    "vancouver_island_coast",
-    "vancouver_island_coast",
     "kootenay",
+    "vancouver_island_coast",
     "mainland_southwest",
-    "vancouver_island_coast"
-  ))%>%
+    "vancouver_island_coast",
+    "north_coast",
+    "north_coast",
+    "north_coast",
+    "north_coast",
+    "north_coast"
+   ))%>%
   select(-properties)
 
 write_rds(bc_region_sf, here::here("out","bc_region_sf.rds"))
 
 ggplot(bc_region_sf)+
-  geom_sf(aes(fill=region), lwd=0)+
+  geom_sf(aes(fill=region), colour="white")+
+  geom_sf_text(aes(label=id))+
   theme_void()
 
